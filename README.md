@@ -34,3 +34,9 @@ accuracy tracking, and a saved high score in `high_score.json`.
 
 The high-score file is created beside `main.py` the first time a new best score
 is achieved.
+
+## Copyright and usage
+
+Copyright (c) 2026 Sai Keerthi. All rights reserved.
+
+This repository is public so the project can be viewed and the game can be played. No license is granted to reuse, copy, modify, or distribute the code or assets. Permission must be obtained from the copyright holder before reusing any part of this project. See [LICENSE](./LICENSE).
