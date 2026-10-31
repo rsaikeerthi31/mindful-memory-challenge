@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A colorful little brain-training game. Remember the sequence, beat your best, and keep your streak alive."
+    />
+    <meta name="theme-color" content="#f6f5f0" />
+    <title>Mindful — Memory Challenge</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="Mindful home">
+          <span class="brand-mark" aria-hidden="true">m</span>
+          <span>mindful<span class="brand-period">.</span></span>
+        </a>
+        <div class="topbar-right">
+          <span class="daily-badge"><span aria-hidden="true">✦</span> A little brain break</span>
+          <button class="sound-button" id="sound-toggle" type="button" aria-pressed="false" title="Toggle sound effects">
+            <span id="sound-icon" aria-hidden="true">♫</span>
+            <span id="sound-label">Sound off</span>
+          </button>
+        </div>
+      </header>
+
+      <main>
+        <section class="intro">
+          <div class="intro-copy">
+            <p class="eyebrow"><span class="eyebrow-dot"></span> YOUR DAILY DOSE OF FOCUS</p>
+            <h1>A sharper mind,<br />one <span>round</span> at a time.</h1>
+            <p class="intro-description">
+              Take a breath, trust your memory, and see how far you can go.
+              No pressure — just you versus the next sequence.
+            </p>
+          </div>
+          <div class="brain-art" aria-hidden="true">
+            <span class="orbit orbit-one"></span>
+            <span class="orbit orbit-two"></span>
+            <span class="brain-emoji">🧠</span>
+            <span class="sparkle sparkle-one">✳</span>
+            <span class="sparkle sparkle-two">✦</span>
+            <span class="sparkle sparkle-three">✧</span>
+          </div>
+        </section>
+
+        <section class="dashboard" aria-label="Memory Challenge game">
+          <div class="game-card">
+            <div class="game-topline">
+              <div class="round-label">
+                <span class="live-dot" id="live-dot"></span>
+                <span id="round-label">READY WHEN YOU ARE</span>
+              </div>
+              <div class="lives" id="lives" aria-label="3 lives">
+                <span>♥</span><span>♥</span><span>♥</span>
+              </div>
+            </div>
+
+            <section class="setup-panel" id="setup-panel">
+              <div class="stage-heading">
+                <span class="step-number">01</span>
+                <div>
+                  <h2>Make it yours</h2>
+                  <p>Pick your playing style and let's get started.</p>
+                </div>
+              </div>
+              <label class="field-label" for="player-name">YOUR NAME</label>
+              <input
+                class="name-input"
+                id="player-name"
+                type="text"
+                maxlength="18"
+                autocomplete="nickname"
+                placeholder="What should we call you?"
+              />
+
+              <div class="field-group">
+                <span class="field-label" id="mode-label">CHOOSE YOUR MODE</span>
+                <div class="mode-grid" role="group" aria-labelledby="mode-label">
+                  <button class="mode-card selected" type="button" data-mode="words" aria-pressed="true">
+                    <span class="mode-icon">Aa</span><span>Words</span>
+                  </button>
+                  <button class="mode-card" type="button" data-mode="numbers" aria-pressed="false">
+                    <span class="mode-icon">123</span><span>Numbers</span>
+                  </button>
+                  <button class="mode-card" type="button" data-mode="emojis" aria-pressed="false">
+                    <span class="mode-icon">☻</span><span>Emojis</span>
+                  </button>
+                  <button class="mode-card" type="button" data-mode="colors" aria-pressed="false">
+                    <span class="mode-icon color-dots"><i></i><i></i><i></i></span><span>Colors</span>
+                  </button>
+                  <button class="mode-card mode-mixed" type="button" data-mode="mixed" aria-pressed="false">
+                    <span class="mode-icon">✳</span><span>A little of everything</span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="field-group difficulty-group">
+                <span class="field-label" id="difficulty-label">SET YOUR PACE</span>
+                <div class="difficulty-options" role="group" aria-labelledby="difficulty-label">
+                  <button class="difficulty-option selected" type="button" data-difficulty="easy" aria-pressed="true">
+                    <span class="difficulty-name">Easy</span><span class="difficulty-detail">3 items · 5 sec</span>
+                  </button>
+                  <button class="difficulty-option" type="button" data-difficulty="medium" aria-pressed="false">
+                    <span class="difficulty-name">Medium</span><span class="difficulty-detail">5 items · 4 sec</span>
+                  </button>
+                  <button class="difficulty-option" type="button" data-difficulty="hard" aria-pressed="false">
+                    <span class="difficulty-name">Hard</span><span class="difficulty-detail">8 items · 3 sec</span>
+                  </button>
+                  <button class="difficulty-option" type="button" data-difficulty="insane" aria-pressed="false">
+                    <span class="difficulty-name">Insane</span><span class="difficulty-detail">12 items · 2 sec</span>
+                  </button>
+                </div>
+              </div>
+
+              <button class="primary-button start-button" id="start-button" type="button">
+                Let's play <span aria-hidden="true">↗</span>
+              </button>
+              <p class="privacy-note"><span aria-hidden="true">⌁</span> <span id="storage-note">Your best score stays right here in this browser.</span></p>
+            </section>
+
+            <section class="play-panel hidden" id="play-panel" aria-live="polite">
+              <div class="play-heading">
+                <div>
+                  <p class="eyebrow" id="phase-eyebrow">TAKE A GOOD LOOK</p>
+                  <h2 id="phase-title">Remember this</h2>
+                </div>
+                <div class="timer" id="timer" aria-label="Time remaining">
+                  <svg viewBox="0 0 48 48" aria-hidden="true">
+                    <circle class="timer-track" cx="24" cy="24" r="20"></circle>
+                    <circle class="timer-progress" id="timer-progress" cx="24" cy="24" r="20"></circle>
+                  </svg>
+                  <span id="timer-value">5</span>
+                </div>
+              </div>
+              <p class="phase-description" id="phase-description">Take a mental snapshot. It disappears when the timer runs out.</p>
+              <div class="sequence-grid" id="sequence-grid" aria-label="Sequence to remember"></div>
+              <form class="answer-form hidden" id="answer-form">
+                <label for="answer-input" class="field-label">TYPE THE SEQUENCE IN ORDER</label>
+                <div class="answer-row">
+                  <input id="answer-input" class="answer-input" type="text" autocomplete="off" spellcheck="false" placeholder="Separate each item with a space" />
+                  <button class="primary-button submit-button" type="submit">Check <span aria-hidden="true">→</span></button>
+                </div>
+                <div class="answer-footer">
+                  <span id="answer-hint">Trust your first instinct.</span>
+                  <button class="hint-button" id="hint-button" type="button">✦ Get a hint <span id="hints-remaining">(2 left)</span></button>
+                </div>
+              </form>
+              <div class="feedback hidden" id="feedback" role="status"></div>
+            </section>
+
+            <section class="gameover-panel hidden" id="gameover-panel">
+              <div class="gameover-icon" aria-hidden="true">✿</div>
+              <p class="eyebrow">THAT WAS A GOOD RUN</p>
+              <h2 id="gameover-title">Beautifully done.</h2>
+              <p class="gameover-copy" id="gameover-copy"></p>
+              <div class="final-stats">
+                <div><strong id="final-score">0</strong><span>POINTS</span></div>
+                <div><strong id="final-level">0</strong><span>LEVELS</span></div>
+                <div><strong id="final-accuracy">0%</strong><span>ACCURACY</span></div>
+              </div>
+              <div class="achievement-list" id="achievement-list"></div>
+              <button class="primary-button start-button" id="play-again-button" type="button">One more round <span aria-hidden="true">↗</span></button>
+            </section>
+          </div>
+
+          <aside class="side-column">
+            <section class="stats-card">
+              <div class="side-card-heading">
+                <div><span class="side-kicker">YOUR LITTLE WINS</span><h2>At a glance</h2></div>
+                <span class="stats-sparkle" aria-hidden="true">✳</span>
+              </div>
+              <div class="stat-row"><span class="stat-icon score-icon">✦</span><span class="stat-name">Current score</span><strong id="score-display">0</strong></div>
+              <div class="stat-row"><span class="stat-icon streak-icon">↗</span><span class="stat-name">Best streak</span><strong id="streak-display">0</strong></div>
+              <div class="stat-row"><span class="stat-icon accuracy-icon">◎</span><span class="stat-name">Accuracy</span><strong id="accuracy-display">—</strong></div>
+              <div class="best-card">
+                <span class="best-cup" aria-hidden="true">🏆</span>
+                <div><span class="best-label">PERSONAL BEST</span><strong id="highscore-display">No score yet</strong></div>
+              </div>
+            </section>
+
+            <section class="how-card">
+              <span class="side-kicker">THE LOWDOWN</span>
+              <h2>How to play</h2>
+              <ol class="how-list">
+                <li><span>01</span><p>Look closely at the sequence.</p></li>
+                <li><span>02</span><p>Type it back in the right order.</p></li>
+                <li><span>03</span><p>Keep your lives. Grow your streak.</p></li>
+              </ol>
+              <div class="bonus-note"><span aria-hidden="true">✦</span> Every 5 levels, there's a 100-point bonus round.</div>
+            </section>
+          </aside>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <span>Made for curious minds <span class="footer-heart">♥</span></span>
+        <span>Take your time. You’ve got this.</span>
+      </footer>
+    </div>
+  </body>
+</html>
