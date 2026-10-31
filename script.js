@@ -108,7 +108,11 @@
   }
 
   function normalizedItems(value) {
-    return value.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
+    const normalized = value.trim().toLocaleLowerCase();
+    if (state.mode === "numbers") {
+      return normalized.replace(/[\s,]+/g, "").split("");
+    }
+    return normalized.split(/[\s,]+/).filter(Boolean);
   }
 
   function renderSequence(sequence, visible) {
