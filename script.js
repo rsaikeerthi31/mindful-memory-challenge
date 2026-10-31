@@ -49,6 +49,7 @@
     soundOn: false,
     audioContext: null,
     highScore: loadHighScore(),
+    highScoreAtStart: 0,
   };
 
   timerProgress.style.strokeDasharray = String(timerCircumference);
@@ -255,6 +256,10 @@
       state.levels += 1;
       state.streak += 1;
       state.bestStreak = Math.max(state.bestStreak, state.streak);
+      if (!state.highScore || state.score > state.highScore.score) {
+        const playerName = ($("#player-name").value.trim() || "Player").slice(0, 18);
+        saveHighScore(playerName, state.score);
+      }
       title.textContent = `Perfect recall! +${points} points`;
       detail.textContent = bonusRound ? "Your 100 bonus points are included. Lovely work." : "One more level, one step further.";
       feedback.append(title, detail);
@@ -305,7 +310,7 @@
       ? Math.round((state.correctItems / state.attemptedItems) * 100)
       : 0;
     const playerName = ($("#player-name").value.trim() || "Player").slice(0, 18);
-    const isNewBest = !state.highScore || state.score > state.highScore.score;
+    const isNewBest = state.score > state.highScoreAtStart;
 
     $("#gameover-title").textContent = state.levels ? "Beautifully done." : "Every try counts.";
     $("#gameover-copy").textContent = isNewBest && state.score > 0
@@ -328,6 +333,7 @@
   }
 
   function startGame() {
+    state.highScoreAtStart = state.highScore ? state.highScore.score : 0;
     state.score = 0;
     state.lives = 3;
     state.levels = 0;
